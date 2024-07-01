@@ -29,15 +29,12 @@ const App = () => {
   }
    
   return (
-    
     <div>
        <h3> Blue Whales Apps </h3>
+        <button className= "btn" onClick={load_data}>Get User List</button>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
-        {!loading && !error && users.length === 0 && <p>No data found</p>}
-      <div>
-        <button className= "btn" onClick={load_data}>Get User List</button>
-      </div>      
+        {!loading && !error && users.length === 0 && <p>No data found</p>}  
       <table>
         <thead>
           <tr>
@@ -48,7 +45,7 @@ const App = () => {
           </tr>
         </thead>
         <tbody>
-        {data.length > 0 ? "No data found" :
+        {data.length > 0 ?
           data.map((row) => {
             return (
               <Datarow
@@ -58,7 +55,11 @@ const App = () => {
                 avatar={row.avatar}
               />
             );
-          })}
+          }): (
+            <tr>
+              <td colSpan="4">No data found to display.</td>
+            </tr>
+          )}
           </tbody>
       </table>
     </div>
