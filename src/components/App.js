@@ -10,7 +10,7 @@ let final_data;
 const App = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
-    axios.get(baseURL).then((response) => {
+    Axios.get(baseURL).then((response) => {
       final_data = response.data.data;
     });
   }, []);
@@ -32,8 +32,9 @@ const App = () => {
             <th> Avatar </th>
           </tr>
         </thead>
-        {data.length==0 ? <h3>No Data To Display</h3> :<tbody>
-          {data.map((row) => {
+        <tbody>
+        {data.length==0 ? "No data found" :
+          data.map((row) => {
             return (
               <Datarow
                 first_name={row.first_name}
@@ -43,8 +44,7 @@ const App = () => {
               />
             );
           })}
-        </tbody>}
-       
+          </tbody>
       </table>
     </div>
   );
