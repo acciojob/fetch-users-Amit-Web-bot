@@ -1,7 +1,7 @@
 
 import React, {useEffect, useState} from "react";
 import Datarow from "./Datarow";
-import Axios from "axios";
+import axios from "axios";
 import './../styles/App.css';
 
 const baseURL = "https://reqres.in/api/users";
@@ -10,18 +10,32 @@ let final_data;
 
 const App = () => {
   const [data, setData] = useState([]);
-  useEffect(() => {
-    Axios.get(baseURL).then((response) => {
-      final_data = response.data.data;
-    });
-  }, []);
-  function load_data() {
-    setData(final_data);
+  const [loading, setLoading] = useState(false);
+  const [error, setError]= useState("")
+  
+  
+  const load_data = async ()=>{
+    setLoading(true)
+    setError("")
+    try{
+      const response = await axios.get(baseURL)
+      setData(response.data.data)
+    }catch(error){
+      setError("Error Loading data")
+    }finally{
+      setLoading(false)
+    }
+
   }
+   
   return (
+    
     <div>
+       <h3> Blue Whales Apps </h3>
+        {loading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
+        {!loading && !error && users.length === 0 && <p>No data found</p>}
       <div>
-        <h3> Blue Whales Apps </h3>
         <button className= "btn" onClick={load_data}>Get User List</button>
       </div>      
       <table>
@@ -34,7 +48,7 @@ const App = () => {
           </tr>
         </thead>
         <tbody>
-        {data && data.length===0 ? "No data found" :
+        {data.length > 0 ? "No data found" :
           data.map((row) => {
             return (
               <Datarow
