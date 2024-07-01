@@ -1,18 +1,28 @@
 
 import React, {useEffect, useState} from "react";
+import Axios from "axios";
 import './../styles/App.css';
+
 const baseURL = "https://reqres.in/api/users";
+
+let final_data;
 
 const App = () => {
   const [data, setData] = useState([]);
   useEffect(() => {
     axios.get(baseURL).then((response) => {
-      setData(response.data.data);
-      console.log(data);
+      final_data = response.data.data;
     });
   }, []);
+  function load_data() {
+    setData(final_data);
+  }
   return (
     <div>
+      <div>
+        <h3> Blue Whales Apps </h3>
+        <button onClick={load_data}>Click To Load Data</button>
+      </div>      
       <table>
         <thead>
           <tr>
@@ -22,7 +32,7 @@ const App = () => {
             <th> Avatar </th>
           </tr>
         </thead>
-        <tbody>
+        {data.length==0 ? <h3>No Data To Display</h3> :<tbody>
           {data.map((row) => {
             return (
               <Datarow
@@ -33,7 +43,8 @@ const App = () => {
               />
             );
           })}
-        </tbody>
+        </tbody>}
+       
       </table>
     </div>
   );
