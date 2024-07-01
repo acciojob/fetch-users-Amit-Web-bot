@@ -1,5 +1,6 @@
 
 import React, {useEffect, useState} from "react";
+import Datarow from "./Datarow";
 import Axios from "axios";
 import './../styles/App.css';
 
@@ -33,7 +34,7 @@ const App = () => {
           </tr>
         </thead>
         <tbody>
-        {data.length==0 ? "No data found" :
+        {data && data.length===0 ? "No data found" :
           data.map((row) => {
             return (
               <Datarow
