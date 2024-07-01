@@ -21,7 +21,7 @@ const App = () => {
     <div>
       <div>
         <h3> Blue Whales Apps </h3>
-        <button onClick={load_data}>Click To Load Data</button>
+        <button className= "btn" onClick={load_data}>Get User List</button>
       </div>      
       <table>
         <thead>
